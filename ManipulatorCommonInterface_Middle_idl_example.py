@@ -114,9 +114,9 @@ class ManipulatorCommonInterface_Middle_i (JARA_ARM__POA.ManipulatorCommonInterf
         trans = math3d.Transform(carPoint.carPos)
         pos = trans.get_pos()
         vec = trans.get_pose_vector()
-        x = pos.x
-        y = pos.y
-        z = pos.z
+        x = pos.x * 1000
+        y = pos.y * 1000
+        z = pos.z * 1000
         roll = vec[3]*180/math.pi
         pitch = vec[4]*180/math.pi
         yaw = vec[5]*180/math.pi
@@ -130,9 +130,9 @@ class ManipulatorCommonInterface_Middle_i (JARA_ARM__POA.ManipulatorCommonInterf
         trans = math3d.Transform(carPoint.carPos)
         pos = trans.get_pos()
         vec = trans.get_pose_vector()
-        x = pos.x + coords[0]
-        y = pos.y + coords[1]
-        z = pos.z + coords[2]
+        x = pos.x * 1000 + coords[0]
+        y = pos.y * 1000 + coords[1]
+        z = pos.z * 1000 + coords[2]
         roll = vec[3]*180/math.pi + coords[3]
         pitch = vec[4]*180/math.pi + coords[4]
         yaw = vec[5]*180/math.pi + coords[5]
@@ -170,9 +170,9 @@ class ManipulatorCommonInterface_Middle_i (JARA_ARM__POA.ManipulatorCommonInterf
 
     # RETURN_ID openGripper()
     def openGripper(self):
-        self._mycobot.set_basic_output(self._solenoid_pin, 1)
-        time.sleep(0.5)
         self._mycobot.set_basic_output(self._motor_pin, 1)
+        time.sleep(0.5)
+        self._mycobot.set_basic_output(self._solenoid_pin, 1)
         return JARA_ARM.RETURN_ID(0, "OK")
 
     # RETURN_ID pause()
@@ -268,7 +268,7 @@ class ManipulatorCommonInterface_Middle_i (JARA_ARM__POA.ManipulatorCommonInterf
 
     # RETURN_ID setHome(in JointPos jointPoint)
     def setHome(self, jointPoint):
-        self._home = jointPoint
+        self._home = [s*180/math.pi for s in jointPoint]
         return JARA_ARM.RETURN_ID(0, "OK")
 
     # RETURN_ID getHome(out JointPos jointPoint)
