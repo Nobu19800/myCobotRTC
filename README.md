@@ -162,6 +162,12 @@ python setup.py install
 pip install math3d
 ```
 
+以下のコマンドでnumpyをインストールします。
+
+```
+pip install numpy
+```
+
 ### ハードウェア構成
 使用するロボットアームは[myCobot 280 M5](https://www.switch-science.com/catalog/7141/)です。myCobot 280 Piには対応していません。
 
