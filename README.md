@@ -186,6 +186,17 @@ myCobot 280 M5と吸引ポンプの接続方法については、すでにいく
 
 - [myCobotRTCTest](https://github.com/Nobu19800/myCobotRTCTest)
 
+
+
+myCobot起動前に、デバイスマネージャでmyCobotを接続したポート名を調べてください。
+
+次に`myCobot.conf`の以下の`COM8`をmyCobotを接続したポート名に修正してください。
+
+```
+conf.default.com_port: COM8
+```
+
+
 `myCobot.py`、`myCobotTest.py`を実行後、RTシステムエディタで以下のように接続してアクティブ化してください。
 
 ![image](https://user-images.githubusercontent.com/6216077/172281149-c46796c3-9718-4d9a-b147-cce1e349b87f.png)
@@ -193,6 +204,8 @@ myCobot 280 M5と吸引ポンプの接続方法については、すでにいく
 `myCobotTest.py`を起動したウィンドウで`input command:`と表示されているので、そこにコマンドを入力するとロボットアームを操作できます。
 
 ※`run_rtc.bat`、`start.bat`を実行することで、上記の作業を自動的に実行します。ただし、ネームサーバーは起動しておく必要があります。終了する時は`exit.bat`を実行します。
+
+### 
 
 #### コマンド一覧
 
