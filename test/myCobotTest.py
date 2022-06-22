@@ -201,80 +201,85 @@ class myCobotTest(OpenRTM_aist.DataFlowComponentBase):
         middle = self._JARA_ARM_ManipulatorCommonInterface_Middle._ptr()
         common = self._JARA_ARM_ManipulatorCommonInterface_Common._ptr()
 
-        if commands[0] == "moveAbs":
-            x = float(commands[1]) / 1000.0
-            y = float(commands[2]) / 1000.0
-            z = float(commands[3]) / 1000.0
-            ret = middle.moveLinearCartesianAbs(
-                JARA_ARM.CarPosWithElbow([[1, 0, 0, x], [0, 1, 0, y], [0, 0, 1, z]], 0,  0))
-            print(ret)
-        elif commands[0] == "moveRel":
-            x = float(commands[1]) / 1000.0
-            y = float(commands[2]) / 1000.0
-            z = float(commands[3]) / 1000.0
-            ret = middle.moveLinearCartesianRel(
-                JARA_ARM.CarPosWithElbow([[1, 0, 0, x], [0, 1, 0, y], [0, 0, 1, z]], 0,  0))
-            print(ret)
-        elif commands[0] == "jointAbs":
-            j0 = float(commands[1]) * math.pi/180
-            j1 = float(commands[2]) * math.pi/180
-            j2 = float(commands[3]) * math.pi/180
-            j3 = float(commands[4]) * math.pi/180
-            j4 = float(commands[5]) * math.pi/180
-            j5 = float(commands[6]) * math.pi/180
-            ret = middle.movePTPJointAbs([j0, j1, j2, j3, j4, j5])
-            print(ret)
-        elif commands[0] == "JointRel":
-            j0 = float(commands[1]) * math.pi/180
-            j1 = float(commands[2]) * math.pi/180
-            j2 = float(commands[3]) * math.pi/180
-            j3 = float(commands[4]) * math.pi/180
-            j4 = float(commands[5]) * math.pi/180
-            j5 = float(commands[6]) * math.pi/180
-            ret = middle.movePTPJointRel([j0, j1, j2, j3, j4, j5])
-            print(ret)
-        elif commands[0] == "pause":
-            ret = middle.pause()
-            print(ret)
-        elif commands[0] == "resume":
-            ret = middle.resume()
-            print(ret)
-        elif commands[0] == "stop":
-            ret = middle.stop()
-            print(ret)
-        elif commands[0] == "setSpeed":
-            ret = middle.setSpeedCartesian(int(commands[1]))
-            print(ret)
-        elif commands[0] == "setSpeedJoint":
-            ret = middle.setSpeedJoint(int(commands[1]))
-            print(ret)
-        elif commands[0] == "setHome":
-            j0 = float(commands[1]) * math.pi/180
-            j1 = float(commands[2]) * math.pi/180
-            j2 = float(commands[3]) * math.pi/180
-            j3 = float(commands[4]) * math.pi/180
-            j4 = float(commands[5]) * math.pi/180
-            j5 = float(commands[6]) * math.pi/180
-            ret = middle.setHome([j0, j1, j2, j3, j4, j5])
-            print(ret)
-        elif commands[0] == "getHome":
-            ret, home = middle.getHome()
-            print(ret, home)
-        elif commands[0] == "goHome":
-            ret = middle.goHome()
-            print(ret)
-        elif commands[0] == "closeGripper":
-            ret = middle.closeGripper()
-            print(ret)
-        elif commands[0] == "openGripper":
-            ret = middle.openGripper()
-            print(ret)
-        elif commands[0] == "servoOFF":
-            ret = common.servoOFF()
-            print(ret)
-        elif commands[0] == "servoON":
-            ret = common.servoON()
-            print(ret)
+        try:
+            if commands[0] == "moveAbs":
+                x = float(commands[1]) / 1000.0
+                y = float(commands[2]) / 1000.0
+                z = float(commands[3]) / 1000.0
+                ret = middle.moveLinearCartesianAbs(
+                    JARA_ARM.CarPosWithElbow([[1, 0, 0, x], [0, 1, 0, y], [0, 0, 1, z]], 0,  0))
+                print(ret)
+            elif commands[0] == "moveRel":
+                x = float(commands[1]) / 1000.0
+                y = float(commands[2]) / 1000.0
+                z = float(commands[3]) / 1000.0
+                ret = middle.moveLinearCartesianRel(
+                    JARA_ARM.CarPosWithElbow([[1, 0, 0, x], [0, 1, 0, y], [0, 0, 1, z]], 0,  0))
+                print(ret)
+            elif commands[0] == "jointAbs":
+                j0 = float(commands[1]) * math.pi/180
+                j1 = float(commands[2]) * math.pi/180
+                j2 = float(commands[3]) * math.pi/180
+                j3 = float(commands[4]) * math.pi/180
+                j4 = float(commands[5]) * math.pi/180
+                j5 = float(commands[6]) * math.pi/180
+                ret = middle.movePTPJointAbs([j0, j1, j2, j3, j4, j5])
+                print(ret)
+            elif commands[0] == "JointRel":
+                j0 = float(commands[1]) * math.pi/180
+                j1 = float(commands[2]) * math.pi/180
+                j2 = float(commands[3]) * math.pi/180
+                j3 = float(commands[4]) * math.pi/180
+                j4 = float(commands[5]) * math.pi/180
+                j5 = float(commands[6]) * math.pi/180
+                ret = middle.movePTPJointRel([j0, j1, j2, j3, j4, j5])
+                print(ret)
+            elif commands[0] == "pause":
+                ret = middle.pause()
+                print(ret)
+            elif commands[0] == "resume":
+                ret = middle.resume()
+                print(ret)
+            elif commands[0] == "stop":
+                ret = middle.stop()
+                print(ret)
+            elif commands[0] == "setSpeed":
+                ret = middle.setSpeedCartesian(int(commands[1]))
+                print(ret)
+            elif commands[0] == "setSpeedJoint":
+                ret = middle.setSpeedJoint(int(commands[1]))
+                print(ret)
+            elif commands[0] == "setHome":
+                j0 = float(commands[1]) * math.pi/180
+                j1 = float(commands[2]) * math.pi/180
+                j2 = float(commands[3]) * math.pi/180
+                j3 = float(commands[4]) * math.pi/180
+                j4 = float(commands[5]) * math.pi/180
+                j5 = float(commands[6]) * math.pi/180
+                ret = middle.setHome([j0, j1, j2, j3, j4, j5])
+                print(ret)
+            elif commands[0] == "getHome":
+                ret, home = middle.getHome()
+                print(ret, home)
+            elif commands[0] == "goHome":
+                ret = middle.goHome()
+                print(ret)
+            elif commands[0] == "closeGripper":
+                ret = middle.closeGripper()
+                print(ret)
+            elif commands[0] == "openGripper":
+                ret = middle.openGripper()
+                print(ret)
+            elif commands[0] == "servoOFF":
+                ret = common.servoOFF()
+                print(ret)
+            elif commands[0] == "servoON":
+                ret = common.servoON()
+                print(ret)
+        except BaseException:
+            import traceback
+            traceback.print_exc()
+
         return RTC.RTC_OK
 
     ###
