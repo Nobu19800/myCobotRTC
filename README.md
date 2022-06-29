@@ -196,6 +196,10 @@ myCobot起動前に、デバイスマネージャでmyCobotを接続したポー
 conf.default.com_port: COM8
 ```
 
+正常にmyConotを接続しているUSBシリアル変換器が認識されていない場合、以下のCP210x Windows Driversをインストールしてください。
+
+- [CP210x USB to UART Bridge VCP Drivers](https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers)
+
 
 `myCobot.py`、`myCobotTest.py`を実行後、RTシステムエディタで以下のように接続してアクティブ化してください。
 
