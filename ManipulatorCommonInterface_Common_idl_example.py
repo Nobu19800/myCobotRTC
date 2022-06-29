@@ -49,7 +49,8 @@ class ManipulatorCommonInterface_Common_i (JARA_ARM__POA.ManipulatorCommonInterf
 
     # RETURN_ID getFeedbackPosJoint(out JointPos pos)
     def getFeedbackPosJoint(self):
-        raise CORBA.NO_IMPLEMENT(0, CORBA.COMPLETED_NO)
+        current_angles = self._mycobot.get_radians()
+        return JARA_ARM.RETURN_ID(0, "OK"), current_angles
         # *** Implement me
         # Must return: result, pos
 
