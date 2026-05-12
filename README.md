@@ -156,6 +156,12 @@ pymycobotをダウンロードして、以下のコマンドを実行します�
 python setup.py install
 ```
 
+`ModuleNotFoundError: No module named 'serial'`のエラーが発生する場合はpyserialをインストールします。
+
+```
+pip install pyserial
+```
+
 次に以下のコマンドでmath3dをインストールします。
 
 ```
