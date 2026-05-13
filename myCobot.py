@@ -14,7 +14,7 @@
 """
 from pymycobot.genre import Coord
 from pymycobot.genre import Angle
-from pymycobot.mycobot import MyCobot
+from pymycobot import MyCobot280 
 from ManipulatorCommonInterface_Common_idl_example import *
 from ManipulatorCommonInterface_Middle_idl_example import *
 import JARA_ARM
@@ -165,7 +165,7 @@ class myCobot(OpenRTM_aist.DataFlowComponentBase):
         self.addPort(self._commonPort)
 
         try:
-            self._mycobot = MyCobot(self._com_port[0], self._baudrate[0])
+            self._mycobot = MyCobot280(self._com_port[0], self._baudrate[0])
             self._JARA_ARM_ManipulatorCommonInterface_Middle.setMyCobot(
                 self._mycobot)
             self._JARA_ARM_ManipulatorCommonInterface_Middle.setSuctionPump(
@@ -231,7 +231,7 @@ class myCobot(OpenRTM_aist.DataFlowComponentBase):
     def onActivated(self, ec_id):
         if self._mycobot is None:
             try:
-                self._mycobot = MyCobot(self._com_port[0])
+                self._mycobot = MyCobot280(self._com_port[0])
                 self._JARA_ARM_ManipulatorCommonInterface_Middle.setMyCobot(
                     self._mycobot)
                 self._JARA_ARM_ManipulatorCommonInterface_Middle.setSuctionPump(

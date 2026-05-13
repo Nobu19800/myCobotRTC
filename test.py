@@ -3,6 +3,7 @@
 
 import math
 import math3d
+from pymycobot import MyCobot280 
 
 # print(dir(math3d))
 #vec = math3d.Vector()
@@ -13,10 +14,17 @@ trans = math3d.Transform(trans_matrix)
 
 
 print(dir(trans))
-print(trans.get_pos().x)
-print(trans.get_pos().y)
-print(trans.get_pos().z)
-print(trans.get_matrix())
-print(trans.get_array())
-print(trans.get_orient())
-print(trans.get_pose_vector())
+print(trans.pos.x)
+print(trans.pos.y)
+print(trans.pos.z)
+print(trans.matrix)
+print(trans.array)
+print(trans.orient)
+print(trans.pose_vector)
+
+rpy = trans.orient.to_euler('xyz')
+print(rpy)
+
+
+mycobot = MyCobot280("COM8", 115200)
+print(mycobot.get_coords())
