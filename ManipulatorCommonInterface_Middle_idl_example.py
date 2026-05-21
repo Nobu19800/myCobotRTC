@@ -25,6 +25,39 @@ from pymycobot.genre import Coord
 import math3d
 import math
 import time
+import numpy
+
+def diffAngles(j_target, j_current, e):
+    diff = numpy.linalg.norm(j_target - j_current)
+    if diff > e:
+        return True
+    return False
+
+
+def diffMatrix(R4_target, R4_current, e):
+
+    R_current = R4_current[:, :3]
+    t_current = R4_current[:, 3]
+
+    R_target = R4_target[:, :3]
+    t_target = R4_target[:, 3]
+
+    R_diff = R_target @ R_current.T
+
+    cos_theta = (numpy.trace(R_diff) - 1.0) / 2.0
+    cos_theta = numpy.clip(cos_theta, -1.0, 1.0)
+
+    rot_diff = numpy.arccos(cos_theta)
+
+    position_error = numpy.linalg.norm(t_target - t_current)
+
+    if rot_diff+position_error > e:
+        return True
+    return False
+    
+
+    
+
 
 
 class ManipulatorCommonInterface_Middle_i (JARA_ARM__POA.ManipulatorCommonInterface_Middle):
@@ -45,6 +78,9 @@ class ManipulatorCommonInterface_Middle_i (JARA_ARM__POA.ManipulatorCommonInterf
 
         self._solenoid_pin = 2
         self._motor_pin = 5
+
+        self._prePos = numpy.array([[-1.0, 0.0, 0.0, 0.0], [0.0, 0.0, -1.0, 0.0], [0.0, -1.0, 0.0, 0.4]])
+        self._preAngles = numpy.array([0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
 
     def setMyCobot(self, mycobot):
         self._mycobot = mycobot
@@ -111,6 +147,11 @@ class ManipulatorCommonInterface_Middle_i (JARA_ARM__POA.ManipulatorCommonInterf
 
     # RETURN_ID moveLinearCartesianAbs(in CarPosWithElbow carPoint)
     def moveLinearCartesianAbs(self, carPoint):
+        targetPos = numpy.array(carPoint.carPos)
+        if diffMatrix(targetPos, self._prePos, 0.01):
+            self._prePos = targetPos
+        else:
+            return JARA_ARM.RETURN_ID(0, "OK")
         trans = math3d.Transform(carPoint.carPos)
         pos = trans.pos
         #vec = trans.pose_vector
@@ -128,7 +169,6 @@ class ManipulatorCommonInterface_Middle_i (JARA_ARM__POA.ManipulatorCommonInterf
     # RETURN_ID moveLinearCartesianRel(in CarPosWithElbow carPoint)
     def moveLinearCartesianRel(self, carPoint):
         coords = self._mycobot.get_coords()
-        print(coords)
         trans = math3d.Transform(carPoint.carPos)
         pos = trans.pos
         #vec = trans.pose_vector
@@ -157,6 +197,11 @@ class ManipulatorCommonInterface_Middle_i (JARA_ARM__POA.ManipulatorCommonInterf
 
     # RETURN_ID movePTPJointAbs(in JointPos jointPoints)
     def movePTPJointAbs(self, jointPoints):
+        target_angles = numpy.array(jointPoints)
+        if diffAngles(target_angles, self._preAngles, 0.01):
+            self._preAngles = target_angles
+        else:
+            return JARA_ARM.RETURN_ID(0, "OK")
         angles = [s*180/math.pi for s in jointPoints]
         self._mycobot.sync_send_angles(angles, self._spdJointRatio)
         return JARA_ARM.RETURN_ID(0, "OK")
